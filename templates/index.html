@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyCheck Pastel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="weather-card">
+        <h1>SkyCheck</h1>
+        
+        <form method="POST" class="search-form">
+            <input type="text" name="city" placeholder="Enter city..." required>
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+
+        {% if weather %}
+            {% if weather.error %}
+                <p class="error-msg">{{ weather.error }}</p>
+            {% else %}
+                <div class="result-area">
+                    <div class="icon-box">
+                        <i id="w-icon" class="fas"></i>
+                    </div>
+                    <span id="condition-text" style="display:none;">{{ weather.weather[0].main }}</span>
+                    
+                    <h2 class="temp-display">{{ weather.main.temp|round }}°C</h2>
+                    <h3 class="city-name">{{ weather.name }}</h3>
+                    <p class="desc">{{ weather.weather[0].description|capitalize }}</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <p class="welcome-msg">Enter a city to see the magic!</p>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
